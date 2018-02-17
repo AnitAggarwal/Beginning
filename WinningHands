@@ -1,0 +1,42 @@
+  #include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int winningHands(int m, int x, vector <int> a) {
+
+    vector<int> ans(m+1);
+    ans[((long long)a[0])%m]=1;
+    for(int i=1;i<a.size();i++)
+    {
+        
+        for(int j=0;j<m;j++)
+        {   if(ans[j]>0)
+            {
+                long long product=((long long)a[i]*(long long)j)%m;
+                ans.at((int)product)+=ans[j];
+            }
+        }
+        long long product = a[i]%m;
+        ans.at((int)product)+=1;
+    }
+    return  ans[x];
+}
+
+int main() {
+    int n;
+    int m;
+    int x;
+    cin >> n >> m >> x;
+    
+    vector<int> a(n);
+    for(int a_i = 0; a_i < n; a_i++){
+        
+       cin >> a[a_i];
+    }
+    int result = winningHands(m, x, a);
+    cout << result << endl;
+    return 0;
+}
